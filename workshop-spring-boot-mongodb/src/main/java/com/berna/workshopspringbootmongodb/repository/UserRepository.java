@@ -8,5 +8,4 @@ import org.springframework.stereotype.Repository;
 
 public interface UserRepository extends MongoRepository<User, String> {
     // nos < > da linha 9 fica o tipo do repositorio (user) e o tipo do ID dele (string)
-
 }

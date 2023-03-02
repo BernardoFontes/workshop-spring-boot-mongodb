@@ -1,6 +1,7 @@
 package com.berna.workshopspringbootmongodb.services;
 
 import com.berna.workshopspringbootmongodb.domain.User;
+import com.berna.workshopspringbootmongodb.dto.UserDTO;
 import com.berna.workshopspringbootmongodb.repository.UserRepository;
 import com.berna.workshopspringbootmongodb.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,5 +22,28 @@ public class UserService {
     public User findById(String id) {
         Optional<User> obj = repo.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
+    }
+
+    public User insert(User obj){
+        return repo.insert(obj);
+    }
+
+    public void delete(String id){
+        repo.deleteById(id);
+    }
+
+    public User update(User obj){
+        User newObj = findById(obj.getId());
+        updateData(newObj, obj);
+        return repo.save(newObj);
+    }
+
+    private void updateData(User newObj, User obj){
+        newObj.setName(obj.getName());
+        newObj.setEmail(obj.getEmail());
+    }
+
+    public User fromDTO(UserDTO obj){
+      return new User(obj.getId(), obj.getName(), obj.getEmail());
     }
 }
