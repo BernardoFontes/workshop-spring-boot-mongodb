@@ -1,7 +1,11 @@
 package com.berna.workshopspringbootmongodb.domain;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Document
 
@@ -10,6 +14,10 @@ public class User {
     private String id;
     private String name;
     private String email;
+    @DBRef(lazy = true)
+    private List<Post> posts = new ArrayList<>();
+
+    // lazy true garante q os posts só serão carregados se eu acessá-los
 
     public User() {
     }
@@ -43,4 +51,12 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
+    }
+
 }
